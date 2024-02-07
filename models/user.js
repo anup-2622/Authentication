@@ -15,5 +15,12 @@ const userSchema = new mongoose.Schema({
         required:true,
     }
 },{timestamps:true})
+
+
+// const recipeSchema = new mongoose.Schema({
+    
+// })
+
+
 const User = mongoose.model('user', userSchema)
 module.exports = User;
