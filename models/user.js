@@ -17,10 +17,5 @@ const userSchema = new mongoose.Schema({
 },{timestamps:true})
 
 
-// const recipeSchema = new mongoose.Schema({
-    
-// })
-
-
 const User = mongoose.model('user', userSchema)
 module.exports = User;

@@ -42,6 +42,17 @@ exports.login = async(req , res)=>{
     }
 }
 
+
+exports.recipe = async (req, res)=>{
+    try{
+
+    }
+    catch(error)
+    {
+        console.log(erro);
+    }
+}
+
 // async function handleUserSignUp(req , res){
 //     const {name , email , password} = req.body;
 //     await User.create({
