@@ -7,9 +7,16 @@ const bodyParser = require('body-parser');
 const db = require("./db/db")
 const userRoute = require("./routes/user")
 const recipeRoute = require("./routes/recipe")
+var cookieParser = require('cookie-parser')
 
 app.use(bodyParser.json());
-app.use(cors())
+app.use(cors({
+
+    origin:['http://localhost:3000'],
+    Credentials:true
+}
+))
+app.use(cookieParser())
 app.use('/user', userRoute);
 app.use('/recipe', recipeRoute);
 // app.render("<p>Happy Coding</p>")

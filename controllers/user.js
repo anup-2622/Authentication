@@ -1,7 +1,7 @@
 
 const User = require("../models/user")
 const bcrypt = require('bcrypt')
-
+const jwt = require('jsonwebtoken')
 
 exports.signup = async (req, res)=>{
     try{
@@ -13,7 +13,7 @@ exports.signup = async (req, res)=>{
             email:req.body.email,
             password: hashPassword,
         })
-        res.status(201).json({message:'user Created successfully' , user: newUser}  )
+        res.status(201).json({status:true, message:'user Created successfully' , user: newUser}  )
     }catch(e){
         res.status(500).json({error:e.message})
     }
@@ -33,8 +33,11 @@ exports.login = async(req , res)=>{
         {
             return res.status(401).json({message:'Wrong Password'})
         }
-        res.status(200).json({message: 'Authentication Successful', user})
         
+        const token = jwt.sign({usernaem:user.name}, process.env.TOKEN_KEY ,{expiresIn:'10m'})
+        res.cookie('token',token , { httpOnly:true, maxAge:36000})
+        
+        return res.status(200).json({ status:true , message: 'Authentication Successful', user})
     }
     catch(error)
     {
