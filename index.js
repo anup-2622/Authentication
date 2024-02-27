@@ -8,12 +8,13 @@ const db = require("./db/db")
 const userRoute = require("./routes/user")
 const recipeRoute = require("./routes/recipe")
 var cookieParser = require('cookie-parser')
+require('dotenv').config()
 
 app.use(bodyParser.json());
 app.use(cors({
 
     origin:['http://localhost:3000'],
-    Credentials:true
+    credentials:true
 }
 ))
 app.use(cookieParser())
