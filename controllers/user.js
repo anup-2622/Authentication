@@ -2,6 +2,8 @@
 const User = require("../models/user")
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+// const nodemailer = require('nodemailer');
+const nodemailer = require('nodemailer')
 
 exports.signup = async (req, res)=>{
     try{
@@ -44,6 +46,52 @@ exports.login = async(req , res)=>{
         res.status(500).json({error:error.message})
     }
 }
+
+exports.forgotpassword = async(req, res)=>{
+ const {email} = req.body;
+
+ try{
+    const user = await User.findOne({email})
+    // console.log(user);
+    if(!user)
+    {
+        return res.json({message: "User not registered"})
+    }
+    
+var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'dev.anup2622@gmail.com',
+      pass: 'fpzp satz mlwr ufbl'
+    }
+  });
+  
+//   console.log(transporter);
+  var mailOptions = {
+    from: 'dev.anup2622@gmail.com',
+    to: email,
+    subject: 'Reset Password',
+    text: `http://localhost:3000/forgotPassword/${token}`
+  };
+
+  
+  
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+       return res.json({message:"error sending email " , error:error})
+    } else {
+        return res.json({status:true , message:"Email sent"})
+    //   console.log('Email sent: ' + info.response);
+    }
+  });
+
+ }  
+ catch(e)
+ {
+    res.status(500).json({error:e.message})
+ }
+}
+
 
 
 exports.recipe = async (req, res)=>{
