@@ -7,4 +7,5 @@ const user = require("../controllers/user")
 router.post('/signup' , user.signup);
 router.post('/login' , user.login);
 router.post('/forgotpassword', user.forgotpassword)
+router.post('/resetPassword/:token', user.resetPassword)
 module.exports = router;
