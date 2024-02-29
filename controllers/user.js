@@ -53,7 +53,8 @@ exports.forgotpassword = async (req, res) => {
   const { email } = req.body;
 
   try {
-    const user = await User.findOne({ email });
+      const user = await User.findOne({ email });
+    //   console.log(email);
     // console.log(user);
     if (!user) {
       return res.json({ message: "User not registered" });
@@ -96,12 +97,14 @@ exports.resetPassword = async (req, res) => {
   const { token } = req.params;
   const { password } = req.body;
 
+//   console.log(token + password);
   try {
     const decoded = await jwt.verify(token, process.env.TOKEN_KEY);
+
     const id = decoded.id;
-    console.log(id);
+
     const hashPassword = await bcrypt.hash(password, 10);
-    console.log(hashPassword);
+    
     await User.findByIdAndUpdate({ _id: id }, { password: hashPassword });
     return res.json({ status: true, message: "Password Updated" });
   } catch (error) {
