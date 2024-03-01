@@ -76,6 +76,7 @@ exports.forgotpassword = async (req, res) => {
       from: "dev.anup2622@gmail.com",
       to: email,
       subject: "Reset Password",
+      text: `This Link will be expires after 5 mins `,
       text: `http://localhost:3000/resetpassword/${token}`,
     };
     //   console.log(mailOptions);
