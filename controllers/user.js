@@ -36,14 +36,14 @@ exports.login = async (req, res) => {
       return res.status(401).json({ message: "Wrong Password" });
     }
 
-    const token = jwt.sign({ usernaem: user.name }, process.env.TOKEN_KEY, {
+    const token = jwt.sign({ username: user.name }, process.env.TOKEN_KEY, {
       expiresIn: "10m",
     });
     res.cookie("token", token, { httpOnly: true, maxAge: 36000 });
 
     return res
       .status(200)
-      .json({ status: true, message: "Authentication Successful", user });
+      .json({ status: true, message: "Authentication Successful", user ,token });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -115,11 +115,30 @@ exports.resetPassword = async (req, res) => {
   }
 };
 
-exports.recipe = async (req, res) => {
+
+
+const userVerify = (req , res , next)=>{
   try {
+    const token = req.body.token;
+    if(!token)
+    {
+      return res.json({status:false , message:"Token Expires"})
+    }
+    const decoded = token.verify(token, process.env.TOKEN_KEY)
   } catch (error) {
-    console.log(erro);
+    res.status(500).json({ error: e.message });
   }
+  
+}
+exports.verify = userVerify , (req, res)=>{
+
+  return res.json({status:true , message:"Authrized"})
+ 
+}
+
+
+
+exports.recipe = async (req, res) => {
 };
 
 // async function handleUserSignUp(req , res){
