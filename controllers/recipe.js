@@ -1,10 +1,25 @@
 const Recipe = require('../models/recipe');
 
-
 exports.createRecipe = async (req, res) => {
   try {
-    const recipe = await Recipe.create(req.body);
+    const { recipeName, ingredients, steps, description } = req.body;
+
+    const recipe = new Recipe({
+      recipeName,
+      ingredients,
+      steps,
+      description
+    });
+
     console.log(recipe);
+    // const {} = req.body;
+
+    // if (!req.file) {
+    //   return res.status(400).json({ success: false, error: 'No image uploaded' });
+    // }
+
+   await recipe.save();
+    // console.log(recipe);
     res.status(201).json({ success: true, data: recipe });
   } catch (error) {
     res.status(400).json({ success: false, error: error.message });
