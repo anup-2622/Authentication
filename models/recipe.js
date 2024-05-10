@@ -13,7 +13,7 @@ const stepSchema = new mongoose.Schema({
 const recipeSchema = new mongoose.Schema({
   recipeName: { type: String, required: true },
   ingredients: [ingredientSchema],
-  steps: [stepSchema],
+  stepsDet: [stepSchema],
   description: { type: String }
 });
 
